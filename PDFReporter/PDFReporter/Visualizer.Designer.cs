@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.grabberBtn = new System.Windows.Forms.Button();
             this.MeasureBtn = new System.Windows.Forms.Button();
             this.previewBtn = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // MainPanel
@@ -76,6 +79,10 @@
             this.previewBtn.UseVisualStyleBackColor = true;
             this.previewBtn.Click += new System.EventHandler(this.previewBtn_Click);
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged);
+            // 
             // Visualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -87,6 +94,7 @@
             this.Controls.Add(this.MainPanel);
             this.Name = "Visualizer";
             this.Text = "MainWindow";
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -97,6 +105,7 @@
         private System.Windows.Forms.Button grabberBtn;
         private System.Windows.Forms.Button MeasureBtn;
         private System.Windows.Forms.Button previewBtn;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 

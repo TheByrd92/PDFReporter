@@ -20,10 +20,17 @@ namespace PDFReporter
             using (var pdfCrtr = new PDFCreator(this, "Example"))
             {
                 pdfCrtr.AddPDFControl(new PDFControls.PDFLabel(20, 20, "Look at this!"));
+                pdfCrtr.AddPDFControl(new PDFControls.PDFLine(10, 100, 260, 100.0f));
+                pdfCrtr.AddPDFControl(new PDFControls.PDFLabel(20, 150, "And This!"));
                 pdfCrtr.CreatePDFObjects();
                 pdfCrtr.PreviewItems();
                 pdfCrtr.ViewReport();
             }
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

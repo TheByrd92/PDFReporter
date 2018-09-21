@@ -2,6 +2,8 @@
 using Root.Reports;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace PDFReporter
 {
@@ -32,21 +34,49 @@ namespace PDFReporter
             {
                 if(itm != null)
                 {
-                    mainVisualizer.GetMainPanel().Controls.Add(itm.winFormControl);
+                    if (itm.GetType().Equals(typeof(PDFLabel)))
+                    {
+                        mainVisualizer.GetMainPanel().Controls.Add(itm.winFormControl);
+                    }
+                    else if(itm.GetType().Equals(typeof(PDFLine)))
+                    {
+                        Pen pen = new Pen(Color.FromArgb(255, 0, 0, 0));
+                        PDFLine tempLine = (PDFLine)itm;
+                        using (var e = mainVisualizer.GetMainPanel().CreateGraphics())
+                        {
+                            e.DrawLine(pen, tempLine.X_Coord, tempLine.Y_Coord, tempLine.endX, tempLine.endY + tempLine.Y_Coord);
+                        }
+                    }
                 }
             }
         }
 
+        public FontDef fd;
         public void CreatePDFObjects()
         {
+            FontDef fdNew;
             foreach (var itm in pdfCtrls)
             {
                 if (itm.GetType().Equals(typeof(PDFLabel)))
                 {
                     PDFLabel tempPDFLbl = (PDFLabel)itm;
-                    FontDef fd = new FontDef(rpt, tempPDFLbl.FontNameType);
+                    try
+                    {
+                        fdNew = new FontDef(rpt, tempPDFLbl.FontNameType);
+                        fd = fdNew;
+                    }
+                    catch
+                    {
+
+                    }
                     FontProp fp = new FontPropMM(fd, tempPDFLbl.FontSize/10);
                     page.Add(tempPDFLbl.X_Coord, tempPDFLbl.Y_Coord, new RepString(fp, tempPDFLbl.Text));
+                }
+                else if (itm.GetType().Equals(typeof(PDFLine)))
+                {
+                    PDFLine tempPDFLine = (PDFLine)itm;
+                    PenProp pp = new PenProp(rpt, tempPDFLine.thickness);
+                    page.Add(tempPDFLine.X_Coord, tempPDFLine.Y_Coord, new RepLine(pp, tempPDFLine.endX, tempPDFLine.endY));
                 }
             }
         }
